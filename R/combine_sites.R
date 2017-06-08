@@ -9,8 +9,8 @@
 #' @import lubridate
 #' @examples
 #' \dontrun{
-#' set.seed(876)
-#' data <- combine_sites(N=1,file.names,folder='data/site_data',site.coords,random=T)
+#' #set.seed(876)
+#' #data <- combine_sites(N=1,file.names,folder='data/site_data',site.coords,random=T)
 #' }
 #' @export
 

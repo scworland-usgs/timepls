@@ -19,7 +19,7 @@
 daily_pls <- function(data,lag=365,ncomps=3) {
 
   if(!is.data.frame(data) || !all(c('date','day','month','cfs','p','tmax','tmin') %in% names(data))) {
-    stop("data must be a data.frame with columns 'date', 'day', month','cfs','p','tmax', and 'tmin' ")}
+    stop("data must be a data.frame with columns 'date', 'day', month','cfs','p','tmax', and 'tmin'")}
 
   #assert_is_date(data$date)
   assert_is_numeric(lag)

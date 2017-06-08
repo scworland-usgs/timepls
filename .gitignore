@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.Rbuildignore
+.DS_Store
+vignettes/*.R
+vignettes/*.html
+
