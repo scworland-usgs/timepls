@@ -1,7 +1,8 @@
 
-dates <- data$date
-y <- data$cfs
-X <- cbind(data$p,data$tmin,data$tmax)
+# data <- data
+# dates <- data$date
+# y <- data$cfs
+# X <- cbind(data$p,data$tmin,data$tmax)
 
 time_pls <- function(y,X,dates,lag=365,ncomps=3) {
 
