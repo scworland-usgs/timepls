@@ -3,6 +3,7 @@
 export(combine_sites)
 export(daily_pls)
 export(is_valid_pH)
+export(time_pls)
 import(assertive)
 import(dplyr)
 import(ggplot2)
