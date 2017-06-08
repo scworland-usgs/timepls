@@ -1,0 +1,16 @@
+Package: timepls
+Type: Package
+Title: Partial least squares (pls) regression on time series data.
+Version: 0.0.1
+Author: Scott Worland
+Maintainer: The package maintainer <scworland@usgs.gov>
+Description: Contains functions for calculating partial least squares regression for time series. 
+    This method is useful when it is not clear what lags will generate the strongest correlation 
+    between several time series. Furthermore, this package also allows a user to input different 
+    window widths for calculating fit metrics. The output plots are similar to wavelet 
+    time-frequency plots, but here we present time-window width plots.
+License: CC0
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+Suggests: testthat
