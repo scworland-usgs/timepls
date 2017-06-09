@@ -38,8 +38,11 @@ time_pls <- function(y,X,dates,lag=30,ncomps=3) {
 
   # run partial least squares regression
   pls_model <- plsreg1(X, y, comps = ncomps)
-  pls_model$dates <- dates
-  return(pls_model)
+
+  fit <- timepls_fit(residuals=pls_model$resid,
+                         dates=dates)
+
+  return(fit)
 
   # month <- data$month[(lag+1):nrow(data)]
   # day <- data$day[(lag+1):nrow(data)]
