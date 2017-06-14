@@ -15,8 +15,10 @@ vignette: >
 ```{r, echo=F}
 knitr::opts_knit$set(warnings=F,message=F)
 
-library(pacman)
-p_load(dplyr,ggplot2,tidyr,timepls)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(timepls)
 ```
 
 ## Introduction 
