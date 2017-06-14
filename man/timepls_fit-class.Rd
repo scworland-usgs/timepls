@@ -4,16 +4,14 @@
 \name{timepls_fit-class}
 \alias{timepls_fit-class}
 \alias{timepls_fit}
-\title{An S4 class to return the results of time_pls
-\code{\link{time_pls}}.}
+\title{An S4 class to return the results of time_pls}
 \description{
 An S4 class to return the results of time_pls
-\code{\link{time_pls}}.
 }
 \section{Slots}{
 
 \describe{
-\item{\code{residulas}}{residuals from fit model}
+\item{\code{residuals}}{residuals from fit model}
 
 \item{\code{dates}}{dates of time series}
 }}

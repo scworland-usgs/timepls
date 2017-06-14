@@ -16,14 +16,14 @@ time_pls(y, X, dates, lag = 30, ncomps = 3)
 \item{ncomps}{Number of components for pls regression}
 }
 \description{
-Performs pls regression on time series data for a given number of lags.
+Performs partial lease squares regression on time series data for a given number of lags.
 }
 \examples{
 \dontrun{
-data <- data
-dates <- data$date
-y <- data$cfs
-X <- cbind(data$p,data$tmin,data$tmax)
+d <- climate_data
+dates <- d$date
+y <- d$cfs
+X <- cbind(d$p,d$tmin,d$tmax)
 plsm1 <- time_pls(y,X,dates,lag=30,ncomps=3)
 }
 }

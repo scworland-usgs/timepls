@@ -1,6 +1,6 @@
 
 #' @title time_pls
-#' @description Performs pls regression on time series data for a given number of lags.
+#' @description Performs partial lease squares regression on time series data for a given number of lags.
 #' @param y Vector of variable to predict using pls
 #' @param X Matrix of covariates for pls
 #' @param lag Number of lags to be used for creating pls components
@@ -9,11 +9,11 @@
 #' @import assertive
 #' @examples
 #' \dontrun{
-#' data <- data
-#' dates <- data$date
-#' y <- data$cfs
-#' X <- cbind(data$p,data$tmin,data$tmax)
-#' plsm1 <- time_pls(y,X,dates,lag=30,ncomps=3)
+#' d <- climate_data
+#' dates <- d$date
+#' y <- d$cfs
+#' X <- cbind(d$p,d$tmin,d$tmax)
+#' fit <- time_pls(y,X,dates,lag=30,ncomps=3)
 #' }
 #' @export
 
@@ -37,10 +37,12 @@ time_pls <- function(y,X,dates,lag=30,ncomps=3) {
   X <- do.call(cbind,ts_embed)
 
   # run partial least squares regression
-  pls_model <- plsreg1(X, y, comps = ncomps)
+  pls_model <- plsdepot::plsreg1(X, y, comps = ncomps)
 
-  fit <- timepls_fit(residuals=pls_model$resid,
-                         dates=dates)
+  fit <- timepls_fit(observed=y,
+                     estimated=as.numeric(pls_model$y.pred),
+                     residuals=as.numeric(pls_model$resid),
+                     dates=dates)
 
   return(fit)
 

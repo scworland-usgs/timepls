@@ -1,14 +1,17 @@
 
 ################################################################################
 #' An S4 class to return the results of time_pls
-#' \code{\link{time_pls}}.
-#'
-#' @slot residulas residuals from fit model
+#' @describeIn time_pls
+#' @slot observed observed values
+#' @slot estimated estimated values
+#' @slot residuals residuals from fit model
 #' @slot dates dates of time series
 #' @export
 
 timepls_fit <- setClass("timepls_fit",
-                    slots = c(residuals = "numeric",
+                    slots = c(observed="numeric",
+                              estimated="numeric",
+                              residuals = "numeric",
                               dates = "Date")
 )
 
@@ -25,8 +28,8 @@ timepls_fit <- setClass("timepls_fit",
 setMethod("plot", "timepls_fit",
           function(x,y,...) {
 
-            d <- data.frame(date = fit@dates,
-                            residuals = fit@residuals)
+            d <- data.frame(date = x@dates,
+                            residuals = x@residuals)
 
             ggplot(d) +
               geom_line(aes(date,residuals)) +
@@ -34,3 +37,4 @@ setMethod("plot", "timepls_fit",
               theme_bw()
           }
 )
+
