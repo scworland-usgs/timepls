@@ -19,7 +19,11 @@ Imports:
   ggplot2,
   gridExtra,
   lubridate,
-  plsdepot
+  plsdepot,
+  roll,
+  magrittr,
+  tidyr,
+  methods
 Suggests: testthat,
     knitr,
     rmarkdown

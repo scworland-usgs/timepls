@@ -6,6 +6,7 @@
 #' @importFrom dplyr mutate
 #' @importFrom tidyr gather
 #' @importFrom lubridate month
+#' @importFrom grDevices colorRampPalette
 #' @param fit time_pls fit object from time_pls function
 #' @param window window for correlations
 #' @param smooth smoothing window for correlation plot

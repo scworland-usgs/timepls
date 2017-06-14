@@ -2,6 +2,7 @@
 ################################################################################
 #' An S4 class to return the results of time_pls
 #' @describeIn time_pls
+#' @importFrom methods new
 #' @slot observed observed values
 #' @slot estimated estimated values
 #' @slot residuals residuals from fit model
