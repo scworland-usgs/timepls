@@ -21,6 +21,7 @@ timepls_fit <- setClass("timepls_fit",
 #' @describeIn timepls_fit
 #' @aliases plot,timepls_fit-method
 #' @import ggplot2
+#' @importFrom magrittr %>%
 #' @param x time_pls fit object from time_pls function.
 #' @param y not used
 #' @export

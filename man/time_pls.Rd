@@ -24,6 +24,6 @@ d <- climate_data
 dates <- d$date
 y <- d$cfs
 X <- cbind(d$p,d$tmin,d$tmax)
-plsm1 <- time_pls(y,X,dates,lag=30,ncomps=3)
+fit <- time_pls(y,X,dates,lag=30,ncomps=3)
 }
 }

@@ -11,6 +11,10 @@ An S4 class to return the results of time_pls
 \section{Slots}{
 
 \describe{
+\item{\code{observed}}{observed values}
+
+\item{\code{estimated}}{estimated values}
+
 \item{\code{residuals}}{residuals from fit model}
 
 \item{\code{dates}}{dates of time series}
