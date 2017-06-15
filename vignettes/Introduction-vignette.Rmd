@@ -12,22 +12,32 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, echo=F}
+```{r, include=F}
 knitr::opts_knit$set(warnings=F,message=F)
+```
 
+```{r, echo=F, include=F}
 library(dplyr)
 library(ggplot2)
 library(tidyr)
 library(timepls)
+library(kableExtra)
 ```
 
 ## Introduction 
 
-This package was created to model time series using (A) multiple covariates, and (B) when the *exact* number of optimal lags is unknown. For example, you are hoping to predict daily streamflow using precipitation, minimum temperature, maximum temperature, and mean temperature. The time series might look something like this:
+This package was created to model time series data that meet some or all of the following conditions:
+
+1. multiple covariates
+2. covariates are correlated
+3. number of predictors is greater than the number of observations.
+4. the *exact* number of optimal lags is unknown
+
+For example, the goal is to predict daily streamflow using precipitation, minimum temperature, maximum temperature, and mean temperature. The time series might look something like this:
 
 ```{r,echo=F,fig.align='center',fig.width=5,fig.height=5}
-d <- climate_data
-dplot <- select(d,date,x1_precip=p,x2_tmin=tmin,x3_tmax=tmax,
+data <- climate_data
+dplot <- select(data,date,x1_precip=p,x2_tmin=tmin,x3_tmax=tmax,
                 x4_tmean=tmean,y_streamflow=cfs) %>%
   gather(key,value,-date)
 
@@ -43,9 +53,41 @@ ggplot(dplot, aes(date, value)) +
         panel.grid = element_blank())
 ```
 
-In this situation, it is not clear what variables are the most important and what lags should be used. Hydrologic theory tells use that streamflow is influenced by antecedent climate conditions, and if we know something about the system, we could probably make a few reasonable assumptions and be ok using a regression model with specific inputs that we chose apriori. But what if we are trying to predict streamflow for multiple sites with very different average climates? What if some basins are influenced by snowmelt? How do we account for the effect of different infiltration capacities of soils? What if the relationships change through time? This package is being developed to be used in these situations. 
+This data and prediction task meet conditions 1, 2, and 4 above. In this situation, it is not clear what variables are the most important and what lags should be used. Hydrologic theory tells use that streamflow is influenced by antecedent climate conditions, and if we know something about the system, we could probably make a few reasonable assumptions and be ok using a regression model with specific inputs that we chose apriori. But what if we are trying to predict streamflow for multiple sites with very different average climates? What if some basins are influenced by snowmelt? How do we account for the effect of different infiltration capacities of soils? What if the relationships change through time? This package was developed to be used in these situations. 
 
-## Method
+## Basic underlying methods
+
+### Regression techniques
+
+The primary statistical method used in the package is partial least squares regression (PLS), which can be thought of as an extension of principal components regression (PCR). PCR simply finds linear combinations of covariates (i.e., components) that explain the most variation in the covariate dataset, and then uses these components in a linear regression model. PLS, however, iteratively searches for linear combinations of covariates that that explain the most variation in the *response variable*, i.e., the latent features produced by PLS maximally summarize the covariance with the response variable. PLS is a supervised dimension reduction procedure. More technical information about PCR and PLS can be found [here](http://users.cecs.anu.edu.au/~kee/pls.pdf).
+
+### How is this specific to time series?
+
+We extend PLS regression to handle multiple lagged time series. This is most easily explained using an example of just the first two weeks and two covariates of data from the streamflow time series shown above. 
+
+```{r, echo=F, results='asis'}
+d <- select(data[1:14,],date,Q=cfs,p,tmean)
+
+knitr::kable(d, format="html", digits=2) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+The goal is to predict streamflow ("Q") using precipitation ("p") and mean temperature ("tmean"). We could just use the daily climate data associated with each daily streamflow value, but we know that streamflow is influenced by lagged climate data. For example, below is the data if we include just two lags for both covariates:
+
+```{r,echo=F, results='asis'}
+lag = 3
+dlag <- data.frame(cbind(d[lag:14,c("date","Q")],embed(d$p,lag),embed(d$tmean,lag))) %>%
+  setNames(c("date","Q","p0","p-1","p-2","tmean0","tmean-1","tmean-2"))
+
+knitr::kable(dlag, format="html", digits=2) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+Where "p0" and "tmean0" is the data associated with the date on each row, and "p-1", "tmean-1", "p-2", and "tmean-2" is the data associated with 1 and 2 days prior. Note that the first two rows are dropped from the data. This is because we added two-day lag values and that information is now capture in "p-2" and "tmean-2". This can quickly become a very wide dataset, as the number of predictors in the new dataset is equal to the $m \times \phi$, where $m$ is the number of original predictors, and $\phi$ is the number of lags. PLS regression can easily handle datasets like these. It also does not require the user to know the exact number of lags to include in the regression, as the PLS algorithm will "figure out" which lags are explaining the maximum amount of variation in Q. The user just must provide some maximum amount of lag that can possibly have influence on the response (e.g., for daily streamflow something like a lag of 365 would be a reasonable upper bound. For most systems, 365 would be far too large, but it would capture snowfall for the previous winter for basins affected by snowmelt). 
+
+
+
+
 
 
 

@@ -37,7 +37,7 @@ time_pls <- function(y,X,dates,lag=30,ncomps=3) {
   X <- do.call(cbind,ts_embed)
 
   # run partial least squares regression
-  pls_model <- plsdepot::plsreg1(X, y, comps = ncomps)
+  pls_model <- plsdepot::plsreg1(X, y, comps = ncomps, crosval = F)
 
   fit <- timepls_fit(observed=y,
                      estimated=as.numeric(pls_model$y.pred),
