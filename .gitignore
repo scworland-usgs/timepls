@@ -7,5 +7,7 @@
 .DS_Store
 vignettes/*.R
 vignettes/*.html
+vignettes/Introduction-vignette_cache
+vignettes/Introduction-vignette_files
 
 inst/doc
